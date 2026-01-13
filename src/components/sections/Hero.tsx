@@ -51,18 +51,18 @@ export default function Hero() {
       },
     })
 
-    // Title animation
+    // Title animation - split into words
     const titleText = title.textContent || ''
     const words = titleText.split(' ')
     title.innerHTML = words
       .map((word, i) => 
         `<span class="inline-block overflow-hidden">
-          <span class="inline-block translate-y-full word-${i}">${word}</span>
+          <span class="inline-block word-span" style="transform: translateY(100%)">${word}</span>
         </span>`
       )
       .join(' ')
 
-    const wordSpans = title.querySelectorAll('[class^="word-"]')
+    const wordSpans = title.querySelectorAll('.word-span')
     
     gsap.to(wordSpans, {
       y: 0,
@@ -70,22 +70,21 @@ export default function Hero() {
       stagger: 0.1,
       ease: 'power4.out',
       delay: 0.3,
+      clearProps: 'transform',
     })
 
-    // Content fade in
+    // Content fade in - set initial state first
     const contentElements = content.querySelectorAll('.animate-in')
-    gsap.fromTo(
-      contentElements,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        delay: 0.8,
-      }
-    )
+    gsap.set(contentElements, { opacity: 0, y: 30 })
+    
+    gsap.to(contentElements, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out',
+      delay: 0.8,
+    })
 
     // Scroll indicator animation
     if (scrollIndicator) {
