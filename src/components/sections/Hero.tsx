@@ -56,20 +56,20 @@ export default function Hero() {
     const words = titleText.split(' ')
     title.innerHTML = words
       .map((word, i) => 
-        `<span class="inline-block overflow-hidden">
+        `<span class="inline-block overflow-hidden mx-1 md:mx-2">
           <span class="inline-block word-span" style="transform: translateY(100%)">${word}</span>
         </span>`
       )
-      .join(' ')
+      .join('')
 
     const wordSpans = title.querySelectorAll('.word-span')
     
     gsap.to(wordSpans, {
       y: 0,
-      duration: 1,
-      stagger: 0.1,
-      ease: 'power4.out',
-      delay: 0.3,
+      duration: 0.6,
+      stagger: 0.08,
+      ease: 'power3.out',
+      delay: 0.2,
       clearProps: 'transform',
     })
 
@@ -80,10 +80,10 @@ export default function Hero() {
     gsap.to(contentElements, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
-      stagger: 0.15,
+      duration: 0.6,
+      stagger: 0.1,
       ease: 'power3.out',
-      delay: 0.8,
+      delay: 0.5,
     })
 
     // Scroll indicator animation
