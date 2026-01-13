@@ -244,15 +244,12 @@ export default function Schedule() {
           </div>
         </div>
 
-        {/* Schedule Cards */}
+        {/* Schedule Cards - Only show active day */}
         <div ref={cardsContainerRef} className="space-y-6">
-          {scheduleData.map((day, dayIndex) => (
+          {scheduleData.filter((_, dayIndex) => dayIndex === activeDay).map((day, dayIndex) => (
             <div
               key={day.day}
-              className={cn(
-                'schedule-card transition-all duration-500',
-                activeDay === dayIndex ? 'opacity-100' : 'opacity-30 pointer-events-none'
-              )}
+              className="schedule-card transition-all duration-500 animate-fade-up"
             >
               <div className={cn(
                 'bg-white dark:bg-dark-surface rounded-3xl p-6 md:p-8',
