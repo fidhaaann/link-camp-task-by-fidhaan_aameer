@@ -6,10 +6,10 @@ import { Menu, X, Sun, Moon, Zap } from 'lucide-react'
 import Link from 'next/link'
 
 const navLinks = [
-  { href: '#home', label: 'Home' },
-  { href: '#about', label: 'About' },
-  { href: '#schedule', label: 'Schedule' },
-  { href: '#register', label: 'Register' },
+  { href: '#home', label: 'Home', isPage: false },
+  { href: '#about', label: 'About', isPage: false },
+  { href: '#schedule', label: 'Schedule', isPage: false },
+  { href: '/register', label: 'Register', isPage: true },
 ]
 
 export default function Navbar() {
@@ -113,17 +113,27 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className={cn(
-                  'nav-link py-2',
-                  activeSection === link.href.substring(1) && 'active'
-                )}
-              >
-                {link.label}
-              </a>
+              link.isPage ? (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="nav-link py-2 px-4 bg-primary text-soft rounded-full hover:bg-accent transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={cn(
+                    'nav-link py-2',
+                    activeSection === link.href.substring(1) && 'active'
+                  )}
+                >
+                  {link.label}
+                </a>
+              )
             ))}
           </div>
 
@@ -192,24 +202,42 @@ export default function Navbar() {
       >
         <div className="px-4 py-6 space-y-4">
           {navLinks.map((link, index) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => handleNavClick(e, link.href)}
-              className={cn(
-                'block py-3 px-4 rounded-xl text-lg font-medium',
-                'transition-all duration-300',
-                activeSection === link.href.substring(1)
-                  ? 'bg-primary text-soft'
-                  : 'text-deep dark:text-soft hover:bg-primary/10'
-              )}
-              style={{ 
-                animationDelay: `${index * 100}ms`,
-                animation: isMobileMenuOpen ? 'menuSlide 0.4s ease-out forwards' : 'none'
-              }}
-            >
-              {link.label}
-            </a>
+            link.isPage ? (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  'block py-3 px-4 rounded-xl text-lg font-medium',
+                  'transition-all duration-300',
+                  'bg-primary text-soft'
+                )}
+                style={{ 
+                  animationDelay: `${index * 100}ms`,
+                  animation: isMobileMenuOpen ? 'menuSlide 0.4s ease-out forwards' : 'none'
+                }}
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className={cn(
+                  'block py-3 px-4 rounded-xl text-lg font-medium',
+                  'transition-all duration-300',
+                  activeSection === link.href.substring(1)
+                    ? 'bg-primary text-soft'
+                    : 'text-deep dark:text-soft hover:bg-primary/10'
+                )}
+                style={{ 
+                  animationDelay: `${index * 100}ms`,
+                  animation: isMobileMenuOpen ? 'menuSlide 0.4s ease-out forwards' : 'none'
+                }}
+              >
+                {link.label}
+              </a>
+            )
           ))}
         </div>
       </div>
