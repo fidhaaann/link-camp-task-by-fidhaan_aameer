@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { cn } from '@/lib/utils'
-import { Menu, X, Sun, Moon, Zap } from 'lucide-react'
+import { Menu, X, Sun, Moon } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const navLinks = [
   { href: '#home', label: 'Home', isPage: false },
@@ -99,14 +100,19 @@ export default function Navbar() {
           <Link 
             href="#home" 
             onClick={(e) => handleNavClick(e, '#home')}
-            className="flex items-center gap-2 group"
+            className="flex items-center gap-3 group"
           >
-            <div className="relative w-10 h-10 flex items-center justify-center">
-              <div className="absolute inset-0 bg-primary rounded-lg rotate-45 transition-transform duration-300 group-hover:rotate-90" />
-              <Zap className="relative w-5 h-5 text-soft dark:text-dark-bg transition-transform duration-300 group-hover:scale-110" />
+            <div className="relative w-14 h-14 flex items-center justify-center">
+              <Image
+                src="/logo/white.png"
+                alt="LINK Logo"
+                width={56}
+                height={56}
+                className="object-contain transition-transform duration-300 group-hover:scale-110 dark:invert-0"
+              />
             </div>
-            <span className="font-display font-bold text-xl text-deep dark:text-soft">
-              IEEE <span className="text-primary">LINK</span>
+            <span className="font-display font-bold text-2xl text-primary">
+              LINK
             </span>
           </Link>
 
