@@ -5,6 +5,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { cn } from '@/lib/utils'
 import { ArrowRight, Calendar, MapPin, ChevronDown, Sparkles } from 'lucide-react'
+import Image from 'next/image'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -13,6 +14,7 @@ if (typeof window !== 'undefined') {
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
   const bgRef = useRef<HTMLDivElement>(null)
+  const imageRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const scrollIndicatorRef = useRef<HTMLDivElement>(null)
@@ -20,28 +22,41 @@ export default function Hero() {
   useEffect(() => {
     const section = sectionRef.current
     const bg = bgRef.current
+    const imageWrapper = imageRef.current
     const content = contentRef.current
     const title = titleRef.current
     const scrollIndicator = scrollIndicatorRef.current
 
-    if (!section || !bg || !content || !title) return
+    if (!section || !bg || !content || !title || !imageWrapper) return
 
-    // Parallax background effect
-    gsap.to(bg, {
-      yPercent: 30,
+    // Parallax background effect - moves slower than scroll
+    gsap.to(imageWrapper, {
+      yPercent: 50,
       ease: 'none',
       scrollTrigger: {
         trigger: section,
         start: 'top top',
         end: 'bottom top',
-        scrub: true,
+        scrub: 0.5,
       },
     })
 
     // Background zoom and blur on scroll
-    gsap.to(bg, {
-      scale: 1.2,
-      filter: 'blur(10px)',
+    gsap.to(imageWrapper, {
+      scale: 1.3,
+      filter: 'blur(15px)',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.8,
+      },
+    })
+
+    // Overlay darkens on scroll
+    gsap.to(bg.querySelector('.overlay'), {
+      opacity: 0.9,
       ease: 'none',
       scrollTrigger: {
         trigger: section,
@@ -123,34 +138,53 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Parallax Background */}
+      {/* Parallax Background with Hero Image */}
       <div
         ref={bgRef}
         className="absolute inset-0 -z-10"
       >
-        {/* Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-soft via-soft to-primary/20 dark:from-dark-bg dark:via-dark-bg dark:to-deep/30" />
-        
-        {/* Animated Circles */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/20 rounded-full blur-3xl animate-float animation-delay-200" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-deep/10 dark:bg-primary/10 rounded-full blur-3xl" />
-
-        {/* Grid Pattern */}
+        {/* Hero Image with Parallax */}
         <div 
-          className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
+          ref={imageRef}
+          className="absolute inset-0 scale-110"
+          style={{ willChange: 'transform, filter' }}
+        >
+          <Image
+            src="/images/hero.jpg"
+            alt="Hero background"
+            fill
+            priority
+            quality={90}
+            className="object-cover"
+            sizes="100vw"
+          />
+        </div>
+
+        {/* Gradient Overlay */}
+        <div className="overlay absolute inset-0 bg-gradient-to-b from-deep/40 via-deep/50 to-deep/80 dark:from-dark-bg/60 dark:via-dark-bg/70 dark:to-dark-bg/90" />
+        
+        {/* Color Accent Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
+        
+        {/* Animated Circles - floating over image */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-float animation-delay-200" style={{ animationDelay: '2s' }} />
+
+        {/* Grid Pattern Overlay */}
+        <div 
+          className="absolute inset-0 opacity-[0.02]"
           style={{
-            backgroundImage: `linear-gradient(to right, currentColor 1px, transparent 1px),
-                             linear-gradient(to bottom, currentColor 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(to right, white 1px, transparent 1px),
+                             linear-gradient(to bottom, white 1px, transparent 1px)`,
             backgroundSize: '60px 60px',
           }}
         />
 
         {/* Floating Particles */}
-        {[...Array(20)].map((_, i) => (
+        {[...Array(30)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-primary/40 rounded-full animate-float"
+            className="absolute w-1 h-1 bg-soft/40 rounded-full animate-float"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -159,6 +193,9 @@ export default function Hero() {
             }}
           />
         ))}
+
+        {/* Vignette Effect */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.3)_100%)]" />
       </div>
 
       {/* Content */}
@@ -181,27 +218,27 @@ export default function Hero() {
         {/* Main Title */}
         <h1
           ref={titleRef}
-          className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-deep dark:text-soft mb-6 leading-tight tracking-tight"
+          className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-soft mb-6 leading-tight tracking-tight drop-shadow-2xl"
         >
           LINK CAMP 2025
         </h1>
 
         {/* Subtitle */}
-        <p className="animate-in text-xl md:text-2xl text-deep/70 dark:text-soft/70 max-w-2xl mx-auto mb-8 leading-relaxed">
+        <p className="animate-in text-xl md:text-2xl text-soft/90 max-w-2xl mx-auto mb-8 leading-relaxed drop-shadow-lg">
           Connect. Learn. Innovate. <br className="hidden sm:block" />
           An immersive tech experience for future leaders.
         </p>
 
         {/* Event Details */}
         <div className="animate-in flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
-          <div className="flex items-center gap-2 text-deep/60 dark:text-soft/60">
-            <Calendar className="w-5 h-5 text-primary" />
-            <span className="font-medium">March 15-17, 2025</span>
+          <div className="flex items-center gap-2 text-soft/80">
+            <Calendar className="w-5 h-5 text-primary drop-shadow-glow" />
+            <span className="font-medium drop-shadow-md">March 15-17, 2025</span>
           </div>
-          <div className="hidden sm:block w-1.5 h-1.5 rounded-full bg-primary/50" />
-          <div className="flex items-center gap-2 text-deep/60 dark:text-soft/60">
-            <MapPin className="w-5 h-5 text-primary" />
-            <span className="font-medium">Innovation Hub, Tech Campus</span>
+          <div className="hidden sm:block w-1.5 h-1.5 rounded-full bg-primary shadow-glow" />
+          <div className="flex items-center gap-2 text-soft/80">
+            <MapPin className="w-5 h-5 text-primary drop-shadow-glow" />
+            <span className="font-medium drop-shadow-md">Innovation Hub, Tech Campus</span>
           </div>
         </div>
 
@@ -236,16 +273,16 @@ export default function Hero() {
         className={cn(
           'absolute bottom-10 left-1/2 -translate-x-1/2',
           'flex flex-col items-center gap-2 cursor-pointer',
-          'text-deep/40 dark:text-soft/40 hover:text-primary transition-colors'
+          'text-soft/60 hover:text-primary transition-colors'
         )}
       >
-        <span className="text-sm font-medium">Scroll to explore</span>
-        <ChevronDown className="w-6 h-6" />
+        <span className="text-sm font-medium drop-shadow-md">Scroll to explore</span>
+        <ChevronDown className="w-6 h-6 drop-shadow-md" />
       </div>
 
       {/* Decorative Corner Elements */}
-      <div className="absolute top-32 left-8 w-20 h-20 border-l-2 border-t-2 border-primary/20 rounded-tl-3xl" />
-      <div className="absolute bottom-32 right-8 w-20 h-20 border-r-2 border-b-2 border-primary/20 rounded-br-3xl" />
+      <div className="absolute top-32 left-8 w-20 h-20 border-l-2 border-t-2 border-soft/20 rounded-tl-3xl" />
+      <div className="absolute bottom-32 right-8 w-20 h-20 border-r-2 border-b-2 border-soft/20 rounded-br-3xl" />
     </section>
   )
 }
