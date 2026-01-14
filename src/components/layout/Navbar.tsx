@@ -102,12 +102,12 @@ export default function Navbar() {
             onClick={(e) => handleNavClick(e, '#home')}
             className="flex items-center gap-3 group"
           >
-            <div className="relative w-14 h-14 flex items-center justify-center">
+            <div className="relative w-20 h-20 flex items-center justify-center">
               <Image
                 src="/logo/white.png"
                 alt="LINK Logo"
-                width={56}
-                height={56}
+                width={80}
+                height={80}
                 className="object-contain transition-transform duration-300 group-hover:scale-110 dark:invert-0"
               />
             </div>
