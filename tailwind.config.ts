@@ -99,6 +99,10 @@ const config: Config = {
         'card': '0 10px 40px rgba(158, 59, 59, 0.15)',
         'card-hover': '0 20px 60px rgba(158, 59, 59, 0.25)',
       },
+      dropShadow: {
+        'glow': '0 0 20px rgba(234, 123, 123, 0.6)',
+        'glow-lg': '0 0 40px rgba(234, 123, 123, 0.8)',
+      },
       transitionTimingFunction: {
         'bounce-in': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
       },
