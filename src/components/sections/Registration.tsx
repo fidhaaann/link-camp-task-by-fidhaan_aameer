@@ -24,8 +24,8 @@ if (typeof window !== 'undefined') {
 const pricingTiers = [
   {
     name: 'Early Bird',
-    price: '$29',
-    originalPrice: '$49',
+    price: '₹399',
+    originalPrice: '₹499',
     description: 'Limited spots available',
     deadline: 'Until Feb 15',
     features: [
@@ -40,8 +40,8 @@ const pricingTiers = [
   },
   {
     name: 'Regular',
-    price: '$49',
-    originalPrice: '$69',
+    price: '₹499',
+    originalPrice: '₹599',
     description: 'Standard registration',
     deadline: 'Until Mar 10',
     features: [
@@ -57,8 +57,8 @@ const pricingTiers = [
   },
   {
     name: 'IEEE Member',
-    price: '$39',
-    originalPrice: '$49',
+    price: '₹349',
+    originalPrice: '₹449',
     description: 'For verified members',
     deadline: 'Valid membership required',
     features: [
