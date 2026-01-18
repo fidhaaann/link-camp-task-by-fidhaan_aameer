@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { cn } from '@/lib/utils'
 import { Zap, Mail, MapPin, Phone, ExternalLink, Heart } from 'lucide-react'
+import Image from 'next/image';
 import Link from 'next/link'
 
 const socialLinks = [
@@ -81,12 +82,17 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <Link href="#home" className="flex items-center gap-3 mb-6 group">
-              <div className="relative w-12 h-12 flex items-center justify-center">
-                <div className="absolute inset-0 bg-primary rounded-lg rotate-45 transition-transform duration-300 group-hover:rotate-90" />
-                <Zap className="relative w-6 h-6 text-soft" />
+              <div className="relative w-16 h-16 flex items-center justify-center">
+                <Image
+                  src="/logo/white.png"
+                  alt="LINK Logo"
+                  width={64}
+                  height={64}
+                  className="object-contain transition-transform duration-300 group-hover:scale-110 dark:invert-0"
+                />
               </div>
               <span className="font-display font-bold text-2xl text-soft">
-                IEEE <span className="text-primary">LINK</span>
+                LINK
               </span>
             </Link>
             <p className="text-soft/70 max-w-md mb-6 leading-relaxed">
@@ -177,9 +183,6 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-soft/50 text-sm">
               © {new Date().getFullYear()} IEEE LINK. All rights reserved.
-            </p>
-            <p className="text-soft/50 text-sm flex items-center gap-1">
-              Made with <Heart className="w-4 h-4 text-primary animate-pulse" /> by IEEE LINK Team
             </p>
           </div>
         </div>
