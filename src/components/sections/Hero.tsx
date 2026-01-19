@@ -159,7 +159,7 @@ export default function Hero() {
           style={{ willChange: 'transform, filter' }}
         >
           <Image
-            src="/images/hero.jpg"
+            src="/logo/Hero.jpg"
             alt="Hero background"
             fill
             priority
